@@ -1,0 +1,118 @@
+.kana {
+    background-color: aqua;
+}
+
+.groupInput {
+    margin-top: 16px;
+    margin-bottom: 16px;
+}
+
+.checkInput {
+    display: flex;
+    flex-direction: row;
+    font-size: 1.8rem;
+}
+
+.checkInput input {
+    margin-right: 16px;
+}
+
+.conceptContent {
+    min-height: 200px;
+    border: 4px solid var(--primary-color);
+    border-radius: 12px;
+    padding: 12px;
+    margin-bottom: 12px;
+    display: flex;
+    flex-direction: column;
+}
+
+.conceptContent p {
+    font-size: 2rem;
+    text-align: justify;
+}
+
+.btnSub {
+    max-width: 200px;
+    border: 2px solid var(--primary-color) !important;
+    color: var(--primary-color) !important;
+    padding: 0 !important;
+    min-width: 100px !important;
+    margin-right: 24px !important;
+}
+
+.btnSub p {
+    font-family: 'm5x7';
+    font-size: 1.6rem;
+}
+
+.classExplanation {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.classExplanation img{
+    max-height:350px; 
+    max-width:350px;
+}
+
+.classExplanationText {
+    border: 2px solid var(--primary-color);
+    margin: 12px 0px;
+    padding: 8px;
+}
+
+.conductancesGuideContainer {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.buttonGroup{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.question {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    max-width: 850px;
+}
+
+.question img {
+    height: 30%;
+    width: 30%;
+    padding: 12px 8px;
+}
+
+.question p {
+    flex: 1;
+    border: 2px solid var(--primary-color);
+    margin: 12px 0px;
+    padding: 8px;
+    height: 100%;
+}
+
+.imgWithRaioGroup {
+    display: grid;
+    width: 100%;
+    column-gap: 24px;
+    row-gap: 24px;
+    grid-template-columns: auto auto;
+}
+
+.imgWithRadio {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.imgWithRadio input {
+    width: 350px;
+    height: 20px;
+}

@@ -1,0 +1,24 @@
+.header {
+    font-size: 10rem;
+    display: flex;
+    justify-content: center;
+    height: 180px;
+}
+
+.headerContainer {
+    display: flex;
+    justify-content: center;
+}
+
+.footer {
+    height: 180px;
+    position: fixed;
+    bottom: 0;
+    display: flex;
+}
+
+.mainContent {
+    min-height: calc(100vh - 180px - 180px - 80px);
+    padding: 20px;
+    margin: 20px;
+}
