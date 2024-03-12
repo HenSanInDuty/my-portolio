@@ -10,11 +10,17 @@ Workflow:
 from typing import Tuple
 from fastapi import FastAPI
 from fastapi.responses import FileResponse
+from fastapi.middleware.cors import CORSMiddleware
+import base64
 
 MODELS = ["DenseNet201", "ConvNeXt_Large", "Inception_V3", "ResNet152", "MobileNet_V2", "EfficientNet_B7", "VGG19"]
 TECHNIQUES = ['GradCAM', 'GradCAMPlusPlus', 'EigenCAM', 'AblationCAM', 'ScoreCAM']
 
 app = FastAPI()
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=['*']
+)
 
 @app.get("/generate-questions/{n_questions}")
 async def generate_list_questions(n_questions: int):
@@ -94,7 +100,9 @@ async def get_image(model_name: str, technique: str, img_id: str):
         img_id (str): Id of the image
     '''
     path = f"./{model_name}/{technique}/{img_id}.png"
-    return FileResponse(path)
+    with open(path, 'rb') as f:
+        base64image = base64.b64encode(f.read())
+    return base64image
 
 @app.get("/image/{img_id}")
 async def get_image(img_id: str):
@@ -105,4 +113,6 @@ async def get_image(img_id: str):
     img_name = mapping[mapping['id'] == int(img_id)]['path'].values[0]
 
     path = f"./CAM-data/{img_name}.JPEG"
-    return FileResponse(path)
+    with open(path, 'rb') as f:
+        base64image = base64.b64encode(f.read())
+    return base64image
