@@ -1,6 +1,5 @@
 import { RouterProvider } from "react-router-dom";
 import style from "./App.module.css";
-import "./assets/font/m5x7.ttf";
 import { router } from "./routes";
 
 const App = () => {

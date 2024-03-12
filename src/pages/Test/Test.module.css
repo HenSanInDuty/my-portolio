@@ -85,8 +85,8 @@
 }
 
 .question img {
-    height: 30%;
-    width: 30%;
+    max-height:350px; 
+    max-width:350px;
     padding: 12px 8px;
 }
 

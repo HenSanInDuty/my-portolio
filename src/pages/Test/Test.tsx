@@ -92,13 +92,14 @@ const Test = () => {
         });
     }
   }, [currentQuestionNumber, listQuestions]);
+  
   return (
     <>
       <div className={styles.container}>
         <div className={styles.conceptContent}>
           <div className={styles.guideContent}>
             {isLoading ? (
-              <div> Loading please waiting</div>
+              <div>Skeleton</div>
             ) : (
               <div className={styles.classExplanation}>
                 <div className={styles.question}>
@@ -113,13 +114,14 @@ const Test = () => {
                   ></img>
                 </div>
                 <div className={styles.imgWithRaioGroup}>
-                  {currentQuestion.cam_data.map((value: string) => {
+                  {currentQuestion.cam_data.map((value: string, index: number) => {
                     return (
                       <div className={styles.imgWithRadio}>
                         <img src={`data:image/jpeg;base64,${value}`}></img>
                         <input
                           name={currentQuestion.labe_name.split(",")[0]}
                           type="radio"
+                          value={`${currentQuestion.imgs_info[index].model_name},${currentQuestion.imgs_info[index].technique},${currentQuestion.imgs_info[index].image_id}`}
                         ></input>
                       </div>
                     );

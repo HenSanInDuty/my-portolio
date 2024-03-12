@@ -115,3 +115,21 @@
     width: 350px;
     height: 20px;
 }
+
+.remindContainer {
+    height: 200px;
+    width: 600px;
+    border: 2px solid var(--primary-color);
+    border-radius: 16px;
+    background-color: #f3ececee;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    align-self: center;
+}
+
+.remindContainer p {
+    padding: 12px;
+    font-size: 1.6rem;
+    color: #ff0000;
+}
