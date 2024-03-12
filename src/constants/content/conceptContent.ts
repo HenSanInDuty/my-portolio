@@ -1,3 +1,3 @@
 export const conceptContent = "Prelimirary testing aims to help participates wholly understand what they should do duing the survey.\nFirst, we will show 3 examples of heat map, which is used as CAM-based method's explanations for deep learning models.\nThese examples give the insight how heat map works: It's color represent the extent to which the pixel activates. The darker (or redder) the color at a pixel is, the more importance that pixel has."
 
-export const agreeContent = "I agree what ....."
+export const agreeContent = "I agree with the text above"

@@ -11,6 +11,7 @@ import {
   getOriginImg,
 } from "../../constants/api/apiUrl";
 import { useEffect, useState } from "react";
+import Backdrop from "@mui/material/Backdrop";
 
 const Test = () => {
   const numberOfQuestion = 15;
@@ -18,23 +19,26 @@ const Test = () => {
   const [currentQuestionNumber, setCurrentQuestionNumber] = useState<number>(1);
   const [listQuestions, setListQuestions] = useState<any>([]);
   const [currentQuestion, setCurrentQuestion] = useState<any>([]);
+  const [openRemind, setOpenRemind] = useState<boolean>(false);
+  const [checked, setChecked] = useState<boolean>(false);
   const navigate = useNavigate();
 
   const btnSubHandle = () => {
     if (currentQuestionNumber == numberOfQuestion) {
       navigate("/survey");
     } else {
-      setCurrentQuestionNumber((value) => value + 1);
+      if (checked) {
+        setCurrentQuestionNumber((value) => value + 1);
+      } else {
+        setOpenRemind(true);
+        setTimeout(() => {
+          setOpenRemind(false);
+        }, 1000);
+      }
     }
   };
 
-  const btnBackHandle = () => {
-    if (currentQuestionNumber > 1) {
-      setCurrentQuestionNumber((value) => value - 1);
-    }
-  };
-
-  async function fetchImages(value: any) {
+  const fetchImages = async (value: any) => {
     const promises = value.data.imgs_info.map(async (imgInfo: any) => {
       const imgCamData = await (
         await axios.get(
@@ -52,7 +56,11 @@ const Test = () => {
 
     const results = await Promise.all(promises);
     return results;
-  }
+  };
+
+  const radioClickHandle = () => {
+    setChecked(true);
+  };
 
   useEffect(() => {
     axios.get(getListQuestion + "/" + numberOfQuestion).then((value) => {
@@ -92,7 +100,7 @@ const Test = () => {
         });
     }
   }, [currentQuestionNumber, listQuestions]);
-  
+
   return (
     <>
       <div className={styles.container}>
@@ -114,18 +122,21 @@ const Test = () => {
                   ></img>
                 </div>
                 <div className={styles.imgWithRaioGroup}>
-                  {currentQuestion.cam_data.map((value: string, index: number) => {
-                    return (
-                      <div className={styles.imgWithRadio}>
-                        <img src={`data:image/jpeg;base64,${value}`}></img>
-                        <input
-                          name={currentQuestion.labe_name.split(",")[0]}
-                          type="radio"
-                          value={`${currentQuestion.imgs_info[index].model_name},${currentQuestion.imgs_info[index].technique},${currentQuestion.imgs_info[index].image_id}`}
-                        ></input>
-                      </div>
-                    );
-                  })}
+                  {currentQuestion.cam_data.map(
+                    (value: string, index: number) => {
+                      return (
+                        <div className={styles.imgWithRadio}>
+                          <img src={`data:image/jpeg;base64,${value}`}></img>
+                          <input
+                            name={currentQuestion.labe_name.split(",")[0]}
+                            type="radio"
+                            value={`${currentQuestion.imgs_info[index].model_name},${currentQuestion.imgs_info[index].technique},${currentQuestion.imgs_info[index].image_id}`}
+                            onClick={radioClickHandle}
+                          ></input>
+                        </div>
+                      );
+                    }
+                  )}
                 </div>
               </div>
             )}
@@ -136,23 +147,12 @@ const Test = () => {
             className={`${styles.btnSub}`}
             variant="outlined"
             size="large"
-            disabled={isLoading || currentQuestionNumber == 1}
-            onClick={() => {
-              btnBackHandle();
-            }}
-          >
-            <p>Back</p>
-          </Button>
-          <Button
-            className={`${styles.btnSub}`}
-            variant="outlined"
-            size="large"
             disabled={isLoading}
             onClick={() => {
               btnSubHandle();
             }}
           >
-            <p>Next</p>
+            <p>{currentQuestionNumber == numberOfQuestion ? "Finish" : "Next"}</p>
           </Button>
           <Button
             className={`${styles.btnSub}`}
@@ -164,6 +164,14 @@ const Test = () => {
           </Button>
         </div>
       </div>
+      <Backdrop
+        sx={{ color: "#fff", zIndex: (theme) => theme.zIndex.drawer + 1 }}
+        open={openRemind}
+      >
+        <div className={styles.remindContainer}>
+          <p>Please check 1 image before (bow)</p>
+        </div>
+      </Backdrop>
     </>
   );
 };
