@@ -134,7 +134,7 @@ table {
 
 @font-face {
   font-family: "m5x7";
-  src: local("m5x7"), url("./assets/font/m5x7.ttf") format("truetype");
+  src: local("m5x7"), url("./assets/font/CrimsonText-Regular.ttf") format("truetype");
 }
 
 html {
@@ -147,7 +147,7 @@ html {
 
 :root {
   font-family: "m5x7";
-  font-size: 16px;
+  font-size: 13px;
   --primary-color: rgb(131, 131, 219);
 }
 
