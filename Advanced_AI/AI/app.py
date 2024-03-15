@@ -7,21 +7,30 @@ Workflow:
 4. Load CAM image for questions
 """
 
-from fastapi import FastAPI
+from typing import Optional, Union
+from fastapi import Depends, FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 import base64
 import random
 import os
+from fastapi.responses import HTMLResponse
 import pandas as pd
+from . import crud, models, schema
+from .database import engine, get_db
+from sqlalchemy.orm import Session
 
 MODELS = ["DenseNet201", "ConvNeXt_Large", "Inception_V3", "ResNet152", "MobileNet_V2", "EfficientNet_B7", "VGG19"]
-TECHNIQUES = ['GradCAM', 'GradCAMPlusPlus', 'EigenCAM', 'AblationCAM', 'ScoreCAM']
+TECHNIQUES = ['GradCAM', 'GradCAMPlusPlus', 'AblationCAM', 'ScoreCAM']
 
 app = FastAPI()
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=['*']
+    allow_origins=['*'],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
 )
+models.Base.metadata.create_all(bind=engine)
 
 @app.get("/generate-questions/{n_questions}")
 async def generate_list_questions(n_questions: int):
@@ -33,7 +42,7 @@ async def generate_list_questions(n_questions: int):
     # Extract valid models
     valid_models = []
     for model in MODELS:
-        if not all([os.path.isdir(f"./{model}/{tech}") for tech in TECHNIQUES]):
+        if not all([os.path.isdir(f"./AI/{model}/{tech}") for tech in TECHNIQUES]):
             continue
         valid_models.append(model)
 
@@ -45,7 +54,7 @@ async def generate_list_questions(n_questions: int):
 
         # Extract valid questions
         model_questions = []
-        for root, dirs, files in os.walk(f"./{model}/{TECHNIQUES[0]}"):
+        for root, dirs, files in os.walk(f"./AI/{model}/{TECHNIQUES[0]}"):
             for file in files:
                 if file.endswith(".png"):
                     model_questions.append(file.split(".")[0])
@@ -68,10 +77,9 @@ async def create_question(model_name: str, image_id: int):
         model_name (str): Name of the model
         image_id (int): Id of the image
     '''
-
     imgs_info = []
     for technique in TECHNIQUES:
-        path = f"./{model_name}/{technique}/{image_id}.png"
+        path = f"./AI/{model_name}/{technique}/{image_id}.png"
         if not os.path.exists(path):
             return {"msg": f"Image {image_id} not found for model {model_name} and technique {technique}"}
         
@@ -81,7 +89,7 @@ async def create_question(model_name: str, image_id: int):
             'image_id': image_id,
         })
 
-    label_mapping = pd.read_csv('./file_paths_with_labels.csv')
+    label_mapping = pd.read_csv('./AI/file_paths_with_labels.csv')
     label = label_mapping[label_mapping['id'] == image_id]['label_name'].values[0]
 
 
@@ -95,7 +103,7 @@ async def get_image(model_name: str, technique: str, img_id: str):
         technique (str): Name of the technique
         img_id (str): Id of the image
     '''
-    path = f"./{model_name}/{technique}/{img_id}.png"
+    path = f"./AI/{model_name}/{technique}/{img_id}.png"
     with open(path, 'rb') as f:
         base64image = base64.b64encode(f.read())
     return base64image
@@ -103,10 +111,22 @@ async def get_image(model_name: str, technique: str, img_id: str):
 @app.get("/image/{img_id}")
 async def get_image(img_id: str):
     '''Get orignal image for questions'''
-    mapping = pd.read_csv('./file_paths_with_labels.csv')
+    mapping = pd.read_csv('./AI/file_paths_with_labels.csv')
     img_name = mapping[mapping['id'] == int(img_id)]['path'].values[0]
 
-    path = f"./CAM-data/{img_name}.JPEG"
+    path = f"./AI/CAM-data/{img_name}.JPEG"
     with open(path, 'rb') as f:
         base64image = base64.b64encode(f.read())
     return base64image
+
+@app.post("/result/")
+async def create_user(userResult: schema.Result, db: Session = Depends(get_db)):
+    crud.create_user_result(db, userResult)
+    return HTMLResponse(content = "Ok", status_code = 200)
+
+@app.get("/user-result")
+async def get_user_result(question_id: Union[int,None] = None, student_id: Union[str,None] = None, model: Union[str,None] = None, techniques: Union[str,None] = None, db: Session = Depends(get_db)):
+    return {
+        "result": crud.get_users(db, question_id, student_id, model, techniques),
+        "total": crud.get_users(db, question_id, student_id, model ,techniques).__len__()
+    }
