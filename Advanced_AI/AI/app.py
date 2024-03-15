@@ -7,11 +7,12 @@ Workflow:
 4. Load CAM image for questions
 """
 
-from typing import Tuple
 from fastapi import FastAPI
-from fastapi.responses import FileResponse
 from fastapi.middleware.cors import CORSMiddleware
 import base64
+import random
+import os
+import pandas as pd
 
 MODELS = ["DenseNet201", "ConvNeXt_Large", "Inception_V3", "ResNet152", "MobileNet_V2", "EfficientNet_B7", "VGG19"]
 TECHNIQUES = ['GradCAM', 'GradCAMPlusPlus', 'EigenCAM', 'AblationCAM', 'ScoreCAM']
@@ -29,9 +30,6 @@ async def generate_list_questions(n_questions: int):
     Args:
         n_questions (int): Number of questions to be generated
     '''
-    import random
-    import os
-
     # Extract valid models
     valid_models = []
     for model in MODELS:
@@ -70,8 +68,6 @@ async def create_question(model_name: str, image_id: int):
         model_name (str): Name of the model
         image_id (int): Id of the image
     '''
-    import os
-    import pandas as pd
 
     imgs_info = []
     for technique in TECHNIQUES:
@@ -107,8 +103,6 @@ async def get_image(model_name: str, technique: str, img_id: str):
 @app.get("/image/{img_id}")
 async def get_image(img_id: str):
     '''Get orignal image for questions'''
-    import pandas as pd
-
     mapping = pd.read_csv('./file_paths_with_labels.csv')
     img_name = mapping[mapping['id'] == int(img_id)]['path'].values[0]
 
