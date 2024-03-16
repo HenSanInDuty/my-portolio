@@ -23,7 +23,7 @@ type ChosenResult = {
 
 const Test = () => {
   //Declare consts
-  const numberOfQuestion = 3;
+  const numberOfQuestion = 15;
 
   // Declare states
   const [isLoading, setIsLoading] = useState<boolean>(true);
