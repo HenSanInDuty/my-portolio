@@ -24,7 +24,7 @@
     margin: 20px;
 }
 
-@media screen and (max-width: 600px){
+@media screen and (max-width: 805px){
     .header{
         font-size: 5rem;
         height: 60px;

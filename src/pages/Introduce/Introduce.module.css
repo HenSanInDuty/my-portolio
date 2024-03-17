@@ -52,7 +52,7 @@
     font-size: 1.6rem;
 }
 
-@media screen and (max-width: 600px){
+@media screen and (max-width: 805px){
     .container {
         padding-left: 0;
         padding-right: 0;

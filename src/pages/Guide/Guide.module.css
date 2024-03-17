@@ -145,7 +145,7 @@
   align-items: center;
 }
 
-@media screen and (max-width: 600px) {
+@media screen and (max-width: 805px) {
   .classExplanation img {
     max-height: 200px;
     max-width: 200px;

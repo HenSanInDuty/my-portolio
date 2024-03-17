@@ -149,6 +149,7 @@ html {
   font-family: "m5x7";
   font-size: 13px;
   --primary-color: rgb(131, 131, 219);
+  --width-of-change: 805px;
 }
 
 .content-container {
@@ -173,7 +174,7 @@ html {
   background-color: #e4eaf3;
 }
 
-@media screen and (max-width: 600px){
+@media screen and (max-width: 805px){
   .container {
       padding-left: 0;
       padding-right: 0;
