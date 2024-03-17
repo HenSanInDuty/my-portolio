@@ -12,7 +12,7 @@ const Introduce = () => {
   };
   return (
     <>
-      <div className={styles.container}>
+      <div className="container">
         <div className={styles.conceptContent}>
           {conceptContent.split("\n").map((value, index) => {
             return <p key={`para-${index}`}>{value}</p>;

@@ -9,7 +9,7 @@ const ErrorPage = () => {
   };
   return (
     <>
-      <div className={styles.container}>
+      <div className="container">
         <div className={styles.conceptContent}>
           <p>SOS you just go wrong way :V</p>
         </div>

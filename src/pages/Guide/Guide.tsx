@@ -71,13 +71,13 @@ const Guide = () => {
 
   return (
     <>
-      <div className={styles.container}>
+      <div className="container">
         <div className={styles.conceptContent}>
           <div className={styles.guideContent}>
             {step == GuideStep.One ? (
               <>
                 <div className={styles.classExplanation}>
-                  <div>
+                  <div className={styles.sevenGuideContainer}>
                     <p className={styles.classExplanationText}>
                       Explanation for class: "7"
                     </p>
@@ -109,7 +109,7 @@ const Guide = () => {
                     <p>Which should be explanation for class: "Dog"</p>
                     <img src={dogOrigin}></img>
                   </div>
-                  <div className={styles.imgWithRaioGroup}>
+                  <div className={styles.imgWithRadioGroup}>
                     <div className={styles.imgWithRadio}>
                       <img src={dogUnit47}></img>
                       <input
@@ -134,7 +134,7 @@ const Guide = () => {
             )}
           </div>
         </div>
-        <div className={styles.buttonGroup}>
+        <div className={`${styles.buttonGroup} ${step == GuideStep.One ? styles.end : ''}`}>
           {step == GuideStep.Two ? (
             <Button
               className={`${styles.btnSub}`}

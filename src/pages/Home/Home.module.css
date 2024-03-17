@@ -49,3 +49,10 @@
     font-family: 'm5x7';
     font-size: 1.6rem;
 }
+
+@media screen and (max-width: 600px){
+    .container {
+        padding-left: 0;
+        padding-right: 0;
+    }
+}

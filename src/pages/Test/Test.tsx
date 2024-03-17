@@ -217,7 +217,7 @@ const Test = () => {
                     src={`data:image/jpeg;base64,${currentQuestion.origin_img}`}
                   ></img>
                 </div>
-                <div className={styles.imgWithRaioGroup}>
+                <div className={styles.imgWithRadioGroup}>
                   {currentQuestion.cam_data.map(
                     (value: string, index: number) => {
                       return (
@@ -245,7 +245,7 @@ const Test = () => {
             )}
           </div>
         </div>
-        <div>
+        <div className={`${styles.buttonGroup}`}>
           <Button
             className={`${styles.btnSub}`}
             variant="outlined"

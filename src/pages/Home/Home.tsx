@@ -53,7 +53,7 @@ const Home = () => {
 
   return (
     <>
-      <div className={styles.container}>
+      <div className="container">
         <div className={styles.groupInput}>
           {inputLabel.map((value, index) => {
             const keyInputValues: KeyInfomationInput = inputValueProp[index];

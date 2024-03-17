@@ -44,6 +44,8 @@
 
 .btnSub {
     max-width: 200px;
+    min-width: 120px;
+    align-self: end;
     border: 2px solid var(--primary-color) !important;
     color: var(--primary-color) !important;
     padding: 0 !important;

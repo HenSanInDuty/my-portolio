@@ -39,6 +39,8 @@
 }
 
 .btnSub {
+    min-width: 120px !important;
+    align-self: end;
     max-width: 200px;
     border: 2px solid var(--primary-color) !important;
     color: var(--primary-color) !important;
@@ -48,4 +50,11 @@
 .btnSub p {
     font-family: 'm5x7';
     font-size: 1.6rem;
+}
+
+@media screen and (max-width: 600px){
+    .container {
+        padding-left: 0;
+        padding-right: 0;
+    }
 }

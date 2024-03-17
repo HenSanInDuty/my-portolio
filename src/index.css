@@ -163,3 +163,19 @@ html {
   font-size: 2rem;
   text-align: justify;
 }
+
+.container {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  padding-left: 20%;
+  padding-right: 20%;
+  background-color: #e4eaf3;
+}
+
+@media screen and (max-width: 600px){
+  .container {
+      padding-left: 0;
+      padding-right: 0;
+  }
+}

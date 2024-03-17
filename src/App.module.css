@@ -23,3 +23,15 @@
     padding: 20px;
     margin: 20px;
 }
+
+@media screen and (max-width: 600px){
+    .header{
+        font-size: 5rem;
+        height: 60px;
+    }
+
+    .mainContent {
+        padding: 0;
+        margin: 20px;
+    }
+}
