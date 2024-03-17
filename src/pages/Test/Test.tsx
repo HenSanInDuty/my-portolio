@@ -46,9 +46,12 @@ const Test = () => {
   const btnSubHandle = () => {
     if (checked) {
       if (currentQuestionNumber == numberOfQuestion) {
+        // Add answer for the result 
         const result = [...resultOfQuestion, chosenValue].map((value) => {
           return [value.model, value.question_id, value.techniques.join(",")];
         });
+
+        // Store the result to database
         axios.post(
           createResult,
           JSON.stringify({
@@ -70,6 +73,9 @@ const Test = () => {
         setResultOfQuestion((currentState) => {
           return [...currentState, chosenValue];
         });
+
+        // Clear the condition for next button
+        setChecked(false);
 
         // Clear the variable chosenValue
         setChosenValue({
