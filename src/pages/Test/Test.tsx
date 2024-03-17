@@ -43,6 +43,18 @@ const Test = () => {
   const navigate = useNavigate();
 
   // Declare event handle function
+  const clearStateForNextBtn = () => {
+    // Clear the condition for next button
+    setChecked(false);
+
+    // Clear the variable chosenValue
+    setChosenValue({
+      model: "",
+      question_id: -1,
+      techniques: [],
+    });
+  }
+
   const btnSubHandle = () => {
     if (checked) {
       if (currentQuestionNumber == numberOfQuestion) {
@@ -74,15 +86,7 @@ const Test = () => {
           return [...currentState, chosenValue];
         });
 
-        // Clear the condition for next button
-        setChecked(false);
-
-        // Clear the variable chosenValue
-        setChosenValue({
-          model: "",
-          question_id: -1,
-          techniques: [],
-        });
+        clearStateForNextBtn();
       }
 
       setCurrentQuestionNumber((value) => value + 1);
